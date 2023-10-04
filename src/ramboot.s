@@ -23,11 +23,11 @@
 
 .cpu cortex-m0plus
 .thumb
-.section mysection
+.section .text
 
-.global _start
+.global mystart
 .thumb_func
-_start:
+mystart:
 unreset:
 	// take RESETS_PADS_BANK0 and RESETS_IO_BANK0 out of reset
 	ldr r1, =RESETS_CTRL
@@ -45,12 +45,12 @@ unreset_check_loop:
 configure:
 	// configure our GPIO pin to be driven by SIO
 	ldr r0, =FUNCTION_SIO
-	ldr r1, =GPIO0_CTRL
+	ldr r1, =GPIO25_CTRL
 	str r0, [r1]
 	
 	// configure pad options, too
 	ldr r0, =0x0
-	ldr r1, =PADS_GPIO0
+	ldr r1, =PADS_GPIO25
 	str r0, [r1]
 	
 	// enable SIO output
@@ -75,7 +75,4 @@ wait:
 	blo wait
 	
 	b loop
-	
-	.section myisec
-	.word 0xff
 	
